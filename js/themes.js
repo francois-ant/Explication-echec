@@ -21,10 +21,8 @@ const THEME_PAR_DEFAUT    = 'chesscom';
    Références aux éléments du DOM
    ─────────────────────────────────────────────────── */
 
-const elementHtml        = document.documentElement;
-const boutonTheme        = document.getElementById('boutonTheme');
-const panneauThemes      = document.getElementById('panneauThemes');
-const fondPanneau        = document.getElementById('fondPanneau');
+const elementHtml = document.documentElement;
+let boutonTheme, panneauThemes, fondPanneau;
 
 
 /* ───────────────────────────────────────────────────
@@ -131,24 +129,42 @@ function basculerPanneauThemes() {
 
 
 /* ───────────────────────────────────────────────────
-   Écouteurs d'événements
+   Initialisation différée des contrôles du panneau
+   (appelée par composants.js APRÈS l'injection du HTML)
    ─────────────────────────────────────────────────── */
 
-boutonTheme.addEventListener('click', basculerPanneauThemes);
+/**
+ * Branche les écouteurs du bouton thème et du panneau.
+ * Doit être appelée une fois que la navigation est injectée dans le DOM.
+ */
+function initialiserGestionTheme() {
+  boutonTheme   = document.getElementById('boutonTheme');
+  panneauThemes = document.getElementById('panneauThemes');
+  fondPanneau   = document.getElementById('fondPanneau');
 
-document.addEventListener('keydown', (evenement) => {
-  if (evenement.key === 'Escape') {
-    fermerPanneauThemes();
+  if (!boutonTheme || !panneauThemes || !fondPanneau) {
+    console.warn('themes.js : éléments du panneau de thème introuvables dans le DOM.');
+    return;
   }
-});
+
+  boutonTheme.addEventListener('click', basculerPanneauThemes);
+
+  document.addEventListener('keydown', (evenement) => {
+    if (evenement.key === 'Escape') {
+      fermerPanneauThemes();
+    }
+  });
+
+  mettreAJourCarteThemeActive(elementHtml.getAttribute('data-theme'));
+}
 
 
 /* ───────────────────────────────────────────────────
-   Initialisation au chargement de la page
+   Application immédiate du thème au chargement
+   (ne dépend pas du DOM injecté, peut s'exécuter tout de suite)
    ─────────────────────────────────────────────────── */
 
 (function initialiserTheme() {
   const themeInitial = recupererThemeSauvegarde();
   elementHtml.setAttribute('data-theme', themeInitial);
-  mettreAJourCarteThemeActive(themeInitial);
-})();
+    })();

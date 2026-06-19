@@ -18,9 +18,7 @@ const LARGEUR_MOBILE = 600;
    Références aux éléments du DOM
    ─────────────────────────────────────────────────── */
 
-const boutonMenu  = document.getElementById('boutonMenu');
-const menuMobile  = document.getElementById('menuMobile');
-const liensMenu   = document.querySelectorAll('.menu-mobile__lien');
+let boutonMenu, menuMobile, liensMenu;
 
 
 /* ───────────────────────────────────────────────────
@@ -70,19 +68,35 @@ function gererRedimensionnement() {
 
 
 /* ───────────────────────────────────────────────────
-   Écouteurs d'événements
+   Initialisation différée
+   (appelée par composants.js APRÈS l'injection du HTML)
    ─────────────────────────────────────────────────── */
 
-boutonMenu.addEventListener('click', basculerMenuMobile);
+/**
+ * Branche les écouteurs du menu mobile.
+ * Doit être appelée une fois que la navigation est injectée dans le DOM.
+ */
+function initialiserNavigation() {
+  boutonMenu = document.getElementById('boutonMenu');
+  menuMobile = document.getElementById('menuMobile');
+  liensMenu  = document.querySelectorAll('.menu-mobile__lien');
 
-liensMenu.forEach(lien => {
-  lien.addEventListener('click', fermerMenuMobile);
-});
-
-window.addEventListener('resize', gererRedimensionnement);
-
-document.addEventListener('keydown', (evenement) => {
-  if (evenement.key === 'Escape') {
-    fermerMenuMobile();
+  if (!boutonMenu || !menuMobile) {
+    console.warn('navigation.js : éléments du menu mobile introuvables dans le DOM.');
+    return;
   }
-});
+
+  boutonMenu.addEventListener('click', basculerMenuMobile);
+
+  liensMenu.forEach(lien => {
+    lien.addEventListener('click', fermerMenuMobile);
+  });
+
+  window.addEventListener('resize', gererRedimensionnement);
+
+  document.addEventListener('keydown', (evenement) => {
+    if (evenement.key === 'Escape') {
+      fermerMenuMobile();
+    }
+  });
+}

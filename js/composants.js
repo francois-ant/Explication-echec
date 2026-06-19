@@ -129,4 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
   injecterNavigation();
   injecterPiedDePage();
   marquerLienActif();
-});
+  initialiserGestionTheme();
+  initialiserNavigation();
+ });
