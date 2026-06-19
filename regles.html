@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="chesscom">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Les Règles — Échecs</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/regles.css" />
+</head>
+
+<body data-page-active="regles">
+
+  <!-- Navigation et pied de page injectés par composants.js -->
+  <div id="zone-navigation"></div>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║         CONTENU PRINCIPAL            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <main class="page-regles">
+
+    <!-- En-tête de la page -->
+    <section class="entete-page">
+      <p class="entete-page__surtitre">Apprendre les échecs</p>
+      <h1 class="entete-page__titre">Les Règles</h1>
+      <p class="entete-page__description">
+        Des bases du jeu aux mouvements les plus subtils, explorez toutes
+        les règles des échecs avec des explications claires et des
+        démonstrations interactives.
+      </p>
+    </section>
+
+    <!-- Onglets de catégories -->
+    <nav class="onglets-categories" id="ongletsCategories">
+      <!-- Généré dynamiquement par page-regles.js -->
+    </nav>
+
+    <!-- Contenu de la catégorie active -->
+    <div id="contenuRegles">
+      <!-- Généré dynamiquement par page-regles.js -->
+    </div>
+
+  </main>
+
+  <div id="zone-pied-de-page"></div>
+
+  <!-- Scripts du projet (ordre important) -->
+  <script src="js/themes.js"></script>
+  <script src="js/composants.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/donnees-regles.js"></script>
+  <script src="js/demos-interactives.js"></script>
+  <script src="js/page-regles.js"></script>
+
+</body>
+</html>

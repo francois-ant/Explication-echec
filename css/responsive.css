@@ -1,0 +1,178 @@
+/* ═══════════════════════════════════════════════════
+   ÉCHECS — Feuille de style responsive
+   Approche : mobile-first
+   Points de rupture :
+     - Mobile  : < 600px
+     - Tablette: 600px → 900px
+     - Bureau  : > 900px (styles de base dans style.css)
+   ═══════════════════════════════════════════════════ */
+
+
+/* ───────────────────────────────────────────────────
+   TABLETTE (600px → 900px)
+   ─────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+
+  /* Hero : on empile le contenu et le visuel */
+  .hero {
+    flex-direction: column;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .hero__contenu {
+    max-width: 100%;
+  }
+
+  .hero__boutons {
+    justify-content: center;
+  }
+
+  .hero__titre {
+    font-size: 2.2rem;
+  }
+
+  /* Rubriques : 2 colonnes au lieu de 3 */
+  .rubriques__grille {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+/* ───────────────────────────────────────────────────
+   MOBILE (< 600px)
+   ─────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+
+  /* Navigation : masquer les liens, afficher hamburger */
+  .navigation__liens {
+    display: none;
+  }
+
+  .bouton-menu {
+    display: flex;
+  }
+
+  .navigation {
+    padding: 0 1rem;
+    height: 56px;
+  }
+
+  .navigation__logo-texte {
+    font-size: 1.1rem;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 2rem 1rem 2rem;
+    gap: 1.5rem;
+  }
+
+  .hero__titre {
+    font-size: 1.75rem;
+  }
+
+  .hero__surtitre {
+    font-size: 0.75rem;
+  }
+
+  .hero__description {
+    font-size: 0.95rem;
+  }
+
+  .hero__boutons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .bouton {
+    width: 100%;
+    text-align: center;
+    padding: 0.85rem 1.2rem;
+  }
+
+  /* Échiquier décoratif : légèrement plus petit */
+  .echiquier-deco__grille {
+    grid-template-columns: repeat(4, 42px);
+    grid-template-rows: repeat(4, 42px);
+  }
+
+  .piece-deco {
+    font-size: 1.6rem;
+  }
+
+  /* Rubriques : 1 colonne sur mobile */
+  .rubriques__grille {
+    grid-template-columns: 1fr;
+  }
+
+  .rubriques {
+    padding: 2rem 1rem;
+  }
+
+  .rubriques__titre {
+    font-size: 1.3rem;
+  }
+
+  /* Carte rubrique : moins de padding */
+  .carte-rubrique {
+    padding: 1.25rem;
+  }
+
+  /* Citation */
+  .citation {
+    padding: 2rem 1rem;
+  }
+
+  .citation__texte {
+    font-size: 1.1rem;
+  }
+
+  /* Panneau thèmes : pleine largeur en bas sur mobile */
+  .panneau-themes {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    border-radius: var(--rayon-carte) var(--rayon-carte) 0 0;
+    transform: translateY(10px);
+  }
+
+  .panneau-themes--visible {
+    transform: translateY(0);
+  }
+
+  .panneau-themes__fond--visible {
+    display: block;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  /* Pied de page */
+  .pied-de-page {
+    padding: 1.5rem 1rem;
+  }
+
+}
+
+
+/* ───────────────────────────────────────────────────
+   ACCESSIBILITÉ — Réduction des animations
+   ─────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="chesscom">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Échecs — Apprendre & Maîtriser</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+
+<body data-page-active="accueil">
+
+  <!-- Navigation et pied de page injectés par composants.js -->
+  <div id="zone-navigation"></div>
+
+  <!-- ╔══════════════════════════════╗ -->
+  <!-- ║          HERO                ║ -->
+  <!-- ╚══════════════════════════════╝ -->
+  <main>
+    <section class="hero">
+      <div class="hero__contenu">
+        <p class="hero__surtitre">Apprenez les échecs, pas à pas</p>
+        <h1 class="hero__titre" id="heroTitre">Maîtrisez l'Art des Échecs</h1>
+        <p class="hero__description">
+          Des pièces en 3D, des règles expliquées clairement,
+          et un plateau interactif pour pratiquer à votre rythme.
+        </p>
+        <div class="hero__boutons">
+          <a href="pieces.html" class="bouton bouton--principal">Découvrir les pièces</a>
+          <a href="regles.html" class="bouton bouton--secondaire">Lire les règles</a>
+        </div>
+      </div>
+      <div class="hero__visuel">
+        <div class="echiquier-deco">
+          <div class="echiquier-deco__pieces">
+            <span class="piece-deco">♔</span>
+            <span class="piece-deco">♕</span>
+            <span class="piece-deco">♖</span>
+            <span class="piece-deco">♗</span>
+            <span class="piece-deco">♘</span>
+            <span class="piece-deco">♙</span>
+          </div>
+          <div class="echiquier-deco__grille">
+            <!-- 16 cases décoratives -->
+            <span class="case case--claire"></span>
+            <span class="case case--sombre"></span>
+            <span class="case case--claire"></span>
+            <span class="case case--sombre"></span>
+            <span class="case case--sombre"></span>
+            <span class="case case--claire"></span>
+            <span class="case case--sombre"></span>
+            <span class="case case--claire"></span>
+            <span class="case case--claire"></span>
+            <span class="case case--sombre"></span>
+            <span class="case case--claire"></span>
+            <span class="case case--sombre"></span>
+            <span class="case case--sombre"></span>
+            <span class="case case--claire"></span>
+            <span class="case case--sombre"></span>
+            <span class="case case--claire"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ╔══════════════════════════════╗ -->
+    <!-- ║      SECTION RUBRIQUES       ║ -->
+    <!-- ╚══════════════════════════════╝ -->
+    <section class="rubriques">
+      <h2 class="rubriques__titre">Par où commencer ?</h2>
+      <div class="rubriques__grille">
+
+        <a href="pieces.html" class="carte-rubrique">
+          <span class="carte-rubrique__icone">♞</span>
+          <h3 class="carte-rubrique__titre">Les Pièces</h3>
+          <p class="carte-rubrique__texte">
+            Explorez chaque pièce en 3D. Apprenez son rôle, sa valeur et ses mouvements.
+          </p>
+          <span class="carte-rubrique__lien">Découvrir →</span>
+        </a>
+
+        <a href="regles.html" class="carte-rubrique">
+          <span class="carte-rubrique__icone">📋</span>
+          <h3 class="carte-rubrique__titre">Les Règles</h3>
+          <p class="carte-rubrique__texte">
+            Roque, prise en passant, promotion… Toutes les règles expliquées simplement.
+          </p>
+          <span class="carte-rubrique__lien">Apprendre →</span>
+        </a>
+
+        <a href="entrainement.html" class="carte-rubrique">
+          <span class="carte-rubrique__icone">🎯</span>
+          <h3 class="carte-rubrique__titre">S'entraîner</h3>
+          <p class="carte-rubrique__texte">
+            Mettez en pratique sur un plateau interactif après chaque leçon.
+          </p>
+          <span class="carte-rubrique__lien">Jouer →</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ╔══════════════════════════════╗ -->
+    <!-- ║       CITATION / INTRO       ║ -->
+    <!-- ╚══════════════════════════════╝ -->
+    <section class="citation">
+      <blockquote class="citation__texte">
+        « Les échecs sont la gymnastique de l'esprit. »
+      </blockquote>
+      <p class="citation__auteur">— Blaise Pascal</p>
+    </section>
+
+  </main>
+
+  <!-- ╔══════════════════════════════╗ -->
+  <!-- ║           PIED DE PAGE       ║ -->
+  <!-- ╚══════════════════════════════╝ -->
+  <div id="zone-pied-de-page"></div>
+
+  <script src="js/themes.js"></script>
+  <script src="js/composants.js"></script>
+  <script src="js/navigation.js"></script>
+
+</body>
+</html>

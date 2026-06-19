@@ -1,0 +1,400 @@
+/* ═══════════════════════════════════════════════════
+   ÉCHECS — Styles de la page des règles (regles.css)
+   ═══════════════════════════════════════════════════ */
+
+
+/* ───────────────────────────────────────────────────
+   Conteneur général
+   ─────────────────────────────────────────────────── */
+
+.page-regles {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Onglets de catégories
+   ─────────────────────────────────────────────────── */
+
+.onglets-categories {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--couleur-bordure);
+  padding-bottom: 0;
+}
+
+.onglet-categorie {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.3rem;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--couleur-texte-secondaire);
+  font-family: var(--police-corps);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  margin-bottom: -1px;
+}
+
+.onglet-categorie:hover {
+  color: var(--couleur-accent);
+}
+
+.onglet-categorie--actif {
+  color: var(--couleur-accent);
+  border-bottom-color: var(--couleur-accent);
+  font-weight: 600;
+}
+
+.onglet-categorie__icone {
+  font-size: 1.1rem;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Accordéon de règles
+   ─────────────────────────────────────────────────── */
+
+.accordeon-regles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.carte-regle {
+  background-color: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon-carte);
+  overflow: hidden;
+  transition: border-color 0.25s, background-color 0.35s;
+}
+
+.carte-regle--ouverte {
+  border-color: var(--couleur-accent);
+}
+
+.carte-regle__entete {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.1rem 1.3rem;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.carte-regle__icone {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--couleur-accent-clair);
+  border-radius: 10px;
+}
+
+.carte-regle__entete-texte {
+  flex: 1;
+  min-width: 0;
+}
+
+.carte-regle__titre {
+  font-family: var(--police-titre);
+  font-size: 1.05rem;
+  font-weight: bold;
+  color: var(--couleur-texte-principal);
+  margin-bottom: 0.2rem;
+}
+
+.carte-regle__resume {
+  font-size: 0.85rem;
+  color: var(--couleur-texte-discret);
+}
+
+.carte-regle__chevron {
+  flex-shrink: 0;
+  font-size: 1rem;
+  color: var(--couleur-texte-discret);
+  transition: transform 0.25s;
+}
+
+.carte-regle--ouverte .carte-regle__chevron {
+  transform: rotate(180deg);
+  color: var(--couleur-accent);
+}
+
+.carte-regle__contenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.carte-regle__contenu-interieur {
+  padding: 0 1.3rem 1.3rem;
+}
+
+.carte-regle__texte {
+  font-size: 0.92rem;
+  color: var(--couleur-texte-secondaire);
+  line-height: 1.75;
+}
+
+.carte-regle__texte strong {
+  color: var(--couleur-texte-principal);
+  font-weight: 600;
+}
+
+.carte-regle__demo {
+  margin-top: 1.25rem;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Démo interactive — conteneur général
+   ─────────────────────────────────────────────────── */
+
+.demo-interactive {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.5rem;
+  background-color: var(--couleur-fond);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon-carte);
+  transition: background-color 0.35s, border-color 0.35s;
+}
+
+.demo-interactive__legende {
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--couleur-accent);
+  text-align: center;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Mini-échiquier 8×8
+   ─────────────────────────────────────────────────── */
+
+.mini-echiquier {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 38px));
+  grid-template-rows: repeat(8, minmax(0, 38px));
+  border: 2px solid var(--couleur-bordure-forte);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--ombre-carte);
+}
+
+.mini-case {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: background-color 0.3s;
+}
+
+.mini-case--claire {
+  background-color: var(--couleur-case-claire);
+}
+
+.mini-case--sombre {
+  background-color: var(--couleur-case-sombre);
+}
+
+.mini-case--surbrillance::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 2.5px solid var(--couleur-accent);
+  border-radius: 4px;
+  pointer-events: none;
+  animation: pulsation-case 1.2s ease-in-out infinite;
+}
+
+@keyframes pulsation-case {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
+.mini-case--promue {
+  animation: eclat-promotion 0.6s ease-out;
+}
+
+@keyframes eclat-promotion {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+.mini-piece {
+  font-size: 1.6rem;
+  line-height: 1;
+  color: #1a1a1a;
+  filter: drop-shadow(0 1px 1px rgba(255,255,255,0.4));
+  user-select: none;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Points de progression de la démo
+   ─────────────────────────────────────────────────── */
+
+.demo-interactive__points {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.point-etape {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--couleur-bordure-forte);
+  transition: background-color 0.25s, transform 0.25s;
+}
+
+.point-etape--actif {
+  background-color: var(--couleur-accent);
+  transform: scale(1.3);
+}
+
+
+/* ───────────────────────────────────────────────────
+   Texte explicatif de l'étape
+   ─────────────────────────────────────────────────── */
+
+.demo-interactive__texte {
+  font-size: 0.88rem;
+  color: var(--couleur-texte-secondaire);
+  text-align: center;
+  max-width: 360px;
+  min-height: 2.6em;
+  line-height: 1.5;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Contrôles de la démo
+   ─────────────────────────────────────────────────── */
+
+.demo-interactive__controles {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.bouton-demo {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-family: var(--police-corps);
+  font-weight: 500;
+  background-color: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure-forte);
+  border-radius: var(--rayon-bouton);
+  color: var(--couleur-texte-secondaire);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.bouton-demo:hover {
+  background-color: var(--couleur-accent-clair);
+  border-color: var(--couleur-accent);
+  color: var(--couleur-accent);
+}
+
+.bouton-demo--principal {
+  background-color: var(--couleur-accent);
+  border-color: var(--couleur-accent);
+  color: var(--couleur-bouton-texte);
+}
+
+.bouton-demo--principal:hover {
+  background-color: var(--couleur-accent-hover);
+  border-color: var(--couleur-accent-hover);
+  color: var(--couleur-bouton-texte);
+}
+
+
+/* ───────────────────────────────────────────────────
+   Responsive — tablette et mobile
+   ─────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+
+  .onglets-categories {
+    overflow-x: auto;
+    gap: 0.3rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .onglet-categorie {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .onglet-categorie__titre {
+    display: inline;
+  }
+
+  .carte-regle__entete {
+    padding: 0.9rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .carte-regle__icone {
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+  }
+
+  .carte-regle__titre {
+    font-size: 0.95rem;
+  }
+
+  .carte-regle__resume {
+    font-size: 0.78rem;
+  }
+
+  .carte-regle__contenu-interieur {
+    padding: 0 1rem 1rem;
+  }
+
+  .mini-echiquier {
+    grid-template-columns: repeat(8, minmax(0, 30px));
+    grid-template-rows: repeat(8, minmax(0, 30px));
+  }
+
+  .mini-piece {
+    font-size: 1.25rem;
+  }
+
+  .demo-interactive {
+    padding: 1.1rem;
+  }
+
+  .demo-interactive__controles {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .bouton-demo {
+    width: 100%;
+    text-align: center;
+  }
+}

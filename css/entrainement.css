@@ -1,0 +1,484 @@
+/* ═══════════════════════════════════════════════════
+   ÉCHECS — Styles de la page d'entraînement (entrainement.css)
+   ═══════════════════════════════════════════════════ */
+
+
+/* ───────────────────────────────────────────────────
+   Conteneur général
+   ─────────────────────────────────────────────────── */
+
+.page-entrainement {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Sélecteur de mode de jeu
+   ─────────────────────────────────────────────────── */
+
+.selecteur-mode {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.bouton-mode {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex: 1;
+  padding: 1rem 1.25rem;
+  background-color: var(--couleur-fond-carte);
+  border: 1.5px solid var(--couleur-bordure);
+  border-radius: var(--rayon-carte);
+  text-align: left;
+  font-family: var(--police-corps);
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.bouton-mode:hover:not(:disabled) {
+  border-color: var(--couleur-accent);
+}
+
+.bouton-mode--actif {
+  border-color: var(--couleur-accent);
+  background-color: var(--couleur-accent-clair);
+}
+
+.bouton-mode--desactive,
+.bouton-mode:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bouton-mode__icone {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.bouton-mode__texte {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.bouton-mode__titre {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--couleur-texte-principal);
+}
+
+.bouton-mode__description {
+  font-size: 0.8rem;
+  color: var(--couleur-texte-discret);
+}
+
+
+/* ───────────────────────────────────────────────────
+   Zone de jeu (plateau + historique côte à côte)
+   ─────────────────────────────────────────────────── */
+
+.zone-jeu {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.colonne-plateau {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Indicateur de tour
+   ─────────────────────────────────────────────────── */
+
+.indicateur-tour {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  background-color: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon-bouton);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--couleur-texte-principal);
+}
+
+.indicateur-tour__pastille {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--couleur-bordure-forte);
+}
+
+.indicateur-tour__pastille--blanc {
+  background-color: #f0f0f0;
+}
+
+.indicateur-tour__pastille--noir {
+  background-color: #2a2a2a;
+}
+
+.texte-echec {
+  color: #e74c3c;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Cadre du plateau (avec coordonnées)
+   ─────────────────────────────────────────────────── */
+
+.cadre-plateau {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 0.4rem;
+}
+
+.coordonnees {
+  display: flex;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--couleur-texte-discret);
+  user-select: none;
+}
+
+.coordonnees--lignes {
+  grid-column: 1;
+  grid-row: 1;
+  flex-direction: column-reverse;
+  justify-content: space-around;
+  align-items: center;
+  width: 16px;
+}
+
+.coordonnees--colonnes {
+  grid-column: 2;
+  grid-row: 2;
+  justify-content: space-around;
+  padding-left: 2px;
+}
+
+.plateau-conteneur {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Plateau de jeu (grille 8×8 interactive)
+   ─────────────────────────────────────────────────── */
+
+.plateau-jeu {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 64px));
+  grid-template-rows: repeat(8, minmax(0, 64px));
+  border: 3px solid var(--couleur-bordure-forte);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--ombre-carte);
+}
+
+.case-plateau {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.case-plateau--claire {
+  background-color: var(--couleur-case-claire);
+}
+
+.case-plateau--sombre {
+  background-color: var(--couleur-case-sombre);
+}
+
+.piece-plateau {
+  font-size: 2.5rem;
+  line-height: 1;
+  color: #1a1a1a;
+  filter: drop-shadow(0 1px 1px rgba(255,255,255,0.35));
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Case sélectionnée */
+.case-plateau--selectionnee {
+  background-color: var(--couleur-accent) !important;
+  opacity: 0.85;
+}
+
+/* Coup possible vers une case vide : pastille centrale */
+.case-plateau--coup-possible::after {
+  content: '';
+  position: absolute;
+  width: 22%;
+  height: 22%;
+  border-radius: 50%;
+  border: 2px solid #2a2a2a;
+  background-color: var(--couleur-accent);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Coup possible = capture : anneau autour de la case */
+.case-plateau--capture-possible::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 3.5px solid var(--couleur-accent);
+  border-radius: 6px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Roi en échec */
+.case-plateau--roi-en-echec {
+  animation: pulsation-echec 1s ease-in-out infinite;
+}
+
+@keyframes pulsation-echec {
+  0%, 100% { box-shadow: inset 0 0 0 4px rgba(231, 76, 60, 0.4); }
+  50%      { box-shadow: inset 0 0 0 4px rgba(231, 76, 60, 0.9); }
+}
+
+/* Dernier coup joué */
+.case-plateau--dernier-coup {
+  box-shadow: inset 0 0 0 3px rgba(255, 205, 0, 0.45);
+}
+
+
+/* ───────────────────────────────────────────────────
+   Boîte de choix de promotion
+   ─────────────────────────────────────────────────── */
+
+.boite-promotion {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.55);
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border-radius: 6px;
+}
+
+.boite-promotion--visible {
+  display: flex;
+}
+
+.choix-promotion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 0.85rem;
+  background-color: var(--couleur-fond-carte);
+  border: 2px solid var(--couleur-bordure-forte);
+  border-radius: var(--rayon-bouton);
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.choix-promotion:hover {
+  border-color: var(--couleur-accent);
+  transform: translateY(-3px);
+}
+
+.choix-promotion__symbole {
+  font-size: 2.2rem;
+  color: #1a1a1a;
+}
+
+.choix-promotion__nom {
+  font-size: 0.78rem;
+  color: var(--couleur-texte-secondaire);
+  font-weight: 500;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Bandeau de fin de partie
+   ─────────────────────────────────────────────────── */
+
+.bandeau-fin-partie {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  background-color: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+  font-family: var(--police-titre);
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 1.5rem;
+}
+
+.bandeau-fin-partie--visible {
+  display: flex;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Contrôles sous le plateau
+   ─────────────────────────────────────────────────── */
+
+.controles-partie {
+  display: flex;
+  gap: 0.75rem;
+}
+/* Le style des boutons .bouton-controle est mutualisé dans style.css */
+
+
+/* ───────────────────────────────────────────────────
+   Colonne historique
+   ─────────────────────────────────────────────────── */
+
+.colonne-historique {
+  background-color: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon-carte);
+  padding: 1.25rem;
+  position: sticky;
+  top: 84px;
+}
+
+.historique__titre {
+  font-family: var(--police-titre);
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--couleur-texte-principal);
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--couleur-bordure);
+}
+
+.liste-historique {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-height: 460px;
+  overflow-y: auto;
+}
+
+.historique__vide {
+  font-size: 0.85rem;
+  color: var(--couleur-texte-discret);
+  font-style: italic;
+}
+
+.ligne-historique {
+  display: grid;
+  grid-template-columns: 28px 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0.35rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.ligne-historique:nth-child(odd) {
+  background-color: var(--couleur-fond);
+}
+
+.ligne-historique__numero {
+  color: var(--couleur-texte-discret);
+  font-weight: 600;
+}
+
+.ligne-historique__coup {
+  color: var(--couleur-texte-principal);
+  font-family: var(--police-corps);
+}
+
+
+/* ───────────────────────────────────────────────────
+   Responsive — tablette et mobile
+   ─────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .zone-jeu {
+    grid-template-columns: 1fr;
+  }
+
+  .colonne-historique {
+    position: static;
+  }
+
+  .liste-historique {
+    max-height: 220px;
+  }
+}
+
+@media (max-width: 600px) {
+  .selecteur-mode {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .plateau-jeu {
+    grid-template-columns: repeat(8, minmax(0, 40px));
+    grid-template-rows: repeat(8, minmax(0, 40px));
+  }
+
+  .piece-plateau {
+    font-size: 1.6rem;
+  }
+
+  .coordonnees {
+    font-size: 0.6rem;
+  }
+
+  .coordonnees--lignes {
+    width: 12px;
+  }
+
+  .choix-promotion {
+    padding: 0.7rem 0.5rem;
+  }
+
+  .choix-promotion__symbole {
+    font-size: 1.6rem;
+  }
+
+  .choix-promotion__nom {
+    font-size: 0.68rem;
+  }
+
+  .boite-promotion {
+    gap: 0.5rem;
+  }
+
+  .controles-partie {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .controles-partie .bouton-controle {
+    width: 100%;
+  }
+
+  .bandeau-fin-partie {
+    font-size: 1.1rem;
+  }
+}

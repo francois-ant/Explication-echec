@@ -1,0 +1,430 @@
+/* ═══════════════════════════════════════════════════
+   ÉCHECS — Styles de la page des pièces (pieces.css)
+   ═══════════════════════════════════════════════════ */
+
+
+/* ───────────────────────────────────────────────────
+   Conteneur général de la page
+   (le style de l'en-tête .entete-page est mutualisé dans style.css)
+   ─────────────────────────────────────────────────── */
+
+.page-pieces {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Grille de sélection des pièces
+   ─────────────────────────────────────────────────── */
+
+.selection-pieces {
+  margin-bottom: 2.5rem;
+}
+
+.selection-pieces__grille {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.bouton-piece {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.1rem;
+  background-color: var(--couleur-fond-carte);
+  border: 1.5px solid var(--couleur-bordure);
+  border-radius: var(--rayon-bouton);
+  color: var(--couleur-texte-secondaire);
+  font-family: var(--police-corps);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s, transform 0.15s;
+}
+
+.bouton-piece:hover {
+  border-color: var(--couleur-accent);
+  color: var(--couleur-accent);
+  transform: translateY(-2px);
+}
+
+.bouton-piece--actif {
+  border-color: var(--couleur-accent);
+  background-color: var(--couleur-accent);
+  color: var(--couleur-bouton-texte);
+}
+
+.bouton-piece--actif:hover {
+  color: var(--couleur-bouton-texte);
+  background-color: var(--couleur-accent-hover);
+}
+
+.bouton-piece__symbole {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.bouton-piece__nom {
+  line-height: 1;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Zone principale : 3D + informations
+   ─────────────────────────────────────────────────── */
+
+.zone-piece {
+  background-color: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon-carte);
+  box-shadow: var(--ombre-carte);
+  overflow: hidden;
+  transition: background-color 0.35s, border-color 0.35s;
+}
+
+.zone-piece__interieur {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 520px;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Colonne gauche : vue 3D
+   ─────────────────────────────────────────────────── */
+
+.zone-3d {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--couleur-bordure);
+  transition: border-color 0.35s;
+}
+
+.conteneur-3d {
+  flex: 1;
+  background: linear-gradient(
+    135deg,
+    var(--couleur-fond) 0%,
+    var(--couleur-fond-carte) 100%
+  );
+  min-height: 380px;
+  position: relative;
+  overflow: hidden;
+}
+
+.conteneur-3d canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.indicateur-chargement {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background-color: var(--couleur-fond);
+  z-index: 5;
+}
+
+.indicateur-chargement__spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--couleur-bordure);
+  border-top-color: var(--couleur-accent);
+  border-radius: 50%;
+  animation: rotation-spinner 0.8s linear infinite;
+}
+
+@keyframes rotation-spinner {
+  to { transform: rotate(360deg); }
+}
+
+.indicateur-chargement__texte {
+  font-size: 0.85rem;
+  color: var(--couleur-texte-secondaire);
+}
+
+.controles-3d {
+  padding: 0.85rem 1.25rem;
+  border-top: 1px solid var(--couleur-bordure);
+  background-color: var(--couleur-fond);
+  transition: background-color 0.35s, border-color 0.35s;
+}
+
+.controles-3d__indice {
+  font-size: 0.78rem;
+  color: var(--couleur-texte-discret);
+  text-align: center;
+  margin-bottom: 0.6rem;
+}
+
+.controles-3d__boutons {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+/* Le style .bouton-controle est mutualisé dans style.css */
+
+
+/* ───────────────────────────────────────────────────
+   Colonne droite : informations sur la pièce
+   ─────────────────────────────────────────────────── */
+
+.info-piece {
+  padding: 2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-piece__entete {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--couleur-bordure);
+}
+
+.info-piece__symbole {
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--couleur-accent);
+}
+
+.info-piece__nom {
+  font-family: var(--police-titre);
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--couleur-texte-principal);
+  margin-bottom: 0.3rem;
+}
+
+.info-piece__valeur {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.etiquette-valeur {
+  font-size: 0.82rem;
+  color: var(--couleur-texte-discret);
+}
+
+.badge-valeur {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.info-piece__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.info-piece__sous-titre {
+  font-family: var(--police-titre);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--couleur-accent);
+}
+
+.info-piece__texte {
+  font-size: 0.92rem;
+  color: var(--couleur-texte-secondaire);
+  line-height: 1.75;
+}
+
+.info-piece__texte strong {
+  color: var(--couleur-texte-principal);
+  font-weight: 600;
+}
+
+.info-piece__texte--anecdote {
+  background-color: var(--couleur-accent-clair);
+  border-left: 3px solid var(--couleur-accent);
+  padding: 0.75rem 1rem;
+  border-radius: 0 var(--rayon-bouton) var(--rayon-bouton) 0;
+}
+
+
+/* ───────────────────────────────────────────────────
+   Diagramme de déplacement
+   ─────────────────────────────────────────────────── */
+
+.grille-diagramme {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  max-width: 220px;
+  margin-bottom: 0.6rem;
+}
+
+.case-diagramme {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  background-color: var(--couleur-bordure);
+  transition: background-color 0.35s;
+}
+
+.case-diagramme--piece {
+  background-color: var(--couleur-accent);
+}
+
+.case-diagramme--accessible {
+  background-color: var(--couleur-texte-discret);
+  opacity: 0.7;
+}
+
+.case-diagramme--capture {
+  background-color: #e74c3c;
+  opacity: 0.7;
+}
+
+.legende-diagramme {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.legende-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: var(--couleur-texte-discret);
+}
+
+.legende-item::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.legende-item--piece::before    { background-color: var(--couleur-accent); }
+.legende-item--accessible::before { background-color: var(--couleur-texte-discret); opacity: 0.7; }
+.legende-item--capture::before  { background-color: #e74c3c; }
+
+
+/* ───────────────────────────────────────────────────
+   Navigation entre pièces
+   ─────────────────────────────────────────────────── */
+
+.navigation-pieces {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 0;
+  margin-top: 1rem;
+}
+
+.navigation-pieces__position {
+  font-size: 0.88rem;
+  color: var(--couleur-texte-discret);
+  font-weight: 500;
+}
+
+.bouton-nav-piece {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  font-family: var(--police-corps);
+  font-weight: 500;
+  background-color: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure-forte);
+  border-radius: var(--rayon-bouton);
+  color: var(--couleur-texte-secondaire);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.bouton-nav-piece:hover:not(:disabled) {
+  background-color: var(--couleur-accent-clair);
+  border-color: var(--couleur-accent);
+  color: var(--couleur-accent);
+}
+
+.bouton-nav-piece:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.bouton-nav-piece--suivant {
+  background-color: var(--couleur-accent);
+  border-color: var(--couleur-accent);
+  color: var(--couleur-bouton-texte);
+}
+
+.bouton-nav-piece--suivant:hover:not(:disabled) {
+  background-color: var(--couleur-accent-hover);
+  border-color: var(--couleur-accent-hover);
+  color: var(--couleur-bouton-texte);
+}
+
+
+/* ───────────────────────────────────────────────────
+   Responsive — tablette et mobile (pieces.css)
+   ─────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .zone-piece__interieur {
+    grid-template-columns: 1fr;
+  }
+
+  .zone-3d {
+    border-right: none;
+    border-bottom: 1px solid var(--couleur-bordure);
+  }
+
+  .conteneur-3d {
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 600px) {
+  .selection-pieces__grille {
+    gap: 0.5rem;
+  }
+
+  .bouton-piece {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.82rem;
+  }
+
+  .info-piece {
+    padding: 1.25rem;
+    gap: 1.1rem;
+  }
+
+  .info-piece__symbole {
+    font-size: 2.2rem;
+  }
+
+  .info-piece__nom {
+    font-size: 1.25rem;
+  }
+
+  .conteneur-3d {
+    min-height: 240px;
+  }
+
+  .navigation-pieces {
+    padding: 1rem 0;
+  }
+
+  .bouton-nav-piece {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.82rem;
+  }
+}

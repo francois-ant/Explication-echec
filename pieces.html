@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="chesscom">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Les Pièces — Échecs</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/pieces.css" />
+</head>
+
+<body data-page-active="pieces">
+
+  <!-- Navigation et pied de page injectés par composants.js -->
+  <div id="zone-navigation"></div>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║         CONTENU PRINCIPAL            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <main class="page-pieces">
+
+    <!-- En-tête de la page -->
+    <section class="entete-page">
+      <div class="entete-page__contenu">
+        <p class="entete-page__surtitre">Apprendre les échecs</p>
+        <h1 class="entete-page__titre">Les Pièces</h1>
+        <p class="entete-page__description">
+          Chaque pièce a un rôle unique. Cliquez sur une pièce pour
+          l'explorer en 3D, découvrir ses mouvements et ses secrets.
+        </p>
+      </div>
+    </section>
+
+    <!-- Grille de sélection des pièces -->
+    <section class="selection-pieces">
+      <div class="selection-pieces__grille">
+
+        <button class="bouton-piece bouton-piece--actif" data-piece="roi" onclick="selectionnerPiece('roi')">
+          <span class="bouton-piece__symbole">♔</span>
+          <span class="bouton-piece__nom">Le Roi</span>
+        </button>
+
+        <button class="bouton-piece" data-piece="reine" onclick="selectionnerPiece('reine')">
+          <span class="bouton-piece__symbole">♕</span>
+          <span class="bouton-piece__nom">La Reine</span>
+        </button>
+
+        <button class="bouton-piece" data-piece="tour" onclick="selectionnerPiece('tour')">
+          <span class="bouton-piece__symbole">♖</span>
+          <span class="bouton-piece__nom">La Tour</span>
+        </button>
+
+        <button class="bouton-piece" data-piece="fou" onclick="selectionnerPiece('fou')">
+          <span class="bouton-piece__symbole">♗</span>
+          <span class="bouton-piece__nom">Le Fou</span>
+        </button>
+
+        <button class="bouton-piece" data-piece="cavalier" onclick="selectionnerPiece('cavalier')">
+          <span class="bouton-piece__symbole">♘</span>
+          <span class="bouton-piece__nom">Le Cavalier</span>
+        </button>
+
+        <button class="bouton-piece" data-piece="pion" onclick="selectionnerPiece('pion')">
+          <span class="bouton-piece__symbole">♙</span>
+          <span class="bouton-piece__nom">Le Pion</span>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- Zone principale : 3D + informations -->
+    <section class="zone-piece" id="zonePiece">
+      <div class="zone-piece__interieur">
+
+        <!-- Colonne gauche : visualisation 3D -->
+        <div class="zone-3d">
+          <div class="conteneur-3d" id="conteneur3D">
+            <!-- Le canvas Three.js est injecté ici par piece3d.js -->
+          </div>
+          <div class="controles-3d">
+            <p class="controles-3d__indice">
+              <span>🖱</span> Cliquer-glisser pour tourner &nbsp;·&nbsp;
+              <span>🔍</span> Molette pour zoomer
+            </p>
+            <div class="controles-3d__boutons">
+              <button class="bouton-controle" onclick="reinitialiserVue()" aria-label="Réinitialiser la vue">
+                ↺ Réinitialiser
+              </button>
+              <button class="bouton-controle bouton-controle--actif" id="boutonRotationAuto" onclick="basculerRotationAuto()">
+                ▶ Rotation auto
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colonne droite : informations sur la pièce -->
+        <div class="info-piece" id="infoPiece">
+
+          <div class="info-piece__entete">
+            <span class="info-piece__symbole" id="symboleAffiche">♔</span>
+            <div>
+              <h2 class="info-piece__nom" id="nomAffiche">Le Roi</h2>
+              <div class="info-piece__valeur" id="valeurAffichee">
+                <span class="etiquette-valeur">Valeur :</span>
+                <span class="badge-valeur">Inestimable</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-piece__section">
+            <h3 class="info-piece__sous-titre">Présentation</h3>
+            <p class="info-piece__texte" id="descriptionAffichee">
+              Le Roi est la pièce la plus importante du jeu. Sa capture
+              signifie la fin de la partie. Malgré son importance capitale,
+              c'est une pièce relativement faible en termes de mobilité.
+            </p>
+          </div>
+
+          <div class="info-piece__section">
+            <h3 class="info-piece__sous-titre">Comment il se déplace</h3>
+            <p class="info-piece__texte" id="mouvementAffiche">
+              Le Roi peut se déplacer d'<strong>une seule case</strong> dans
+              n'importe quelle direction : horizontalement, verticalement,
+              ou en diagonale. Il ne peut jamais se déplacer sur une case
+              contrôlée par une pièce adverse.
+            </p>
+          </div>
+
+          <div class="info-piece__section">
+            <h3 class="info-piece__sous-titre">Le saviez-vous ?</h3>
+            <p class="info-piece__texte info-piece__texte--anecdote" id="anecdoteAffichee">
+              Le Roi peut réaliser un mouvement spécial appelé le
+              <strong>roque</strong> : en partenariat avec une Tour,
+              il peut faire un grand bond pour se mettre en sécurité,
+              à condition de n'avoir jamais bougé auparavant.
+            </p>
+          </div>
+
+          <!-- Diagramme de déplacement -->
+          <div class="info-piece__section">
+            <h3 class="info-piece__sous-titre">Diagramme des mouvements</h3>
+            <div class="diagramme-deplacement" id="diagrammeDeplacement">
+              <!-- Généré dynamiquement par piece3d.js -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation entre pièces -->
+    <section class="navigation-pieces">
+      <button class="bouton-nav-piece" id="boutonPiecePrecedente" onclick="allerPiecePrecedente()">
+        ← Pièce précédente
+      </button>
+      <span class="navigation-pieces__position" id="positionPiece">1 / 6</span>
+      <button class="bouton-nav-piece bouton-nav-piece--suivant" id="boutonPieceSuivante" onclick="allerPieceSuivante()">
+        Pièce suivante →
+      </button>
+    </section>
+
+  </main>
+
+  <div id="zone-pied-de-page"></div>
+
+  <!-- Bibliothèque Three.js (chargée depuis CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+
+  <!-- Scripts du projet (ordre important) -->
+  <script src="js/themes.js"></script>
+  <script src="js/composants.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/donnees-pieces.js"></script>
+  <script src="js/piece3d.js"></script>
+
+</body>
+</html>

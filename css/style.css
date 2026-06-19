@@ -1,0 +1,770 @@
+/* ═══════════════════════════════════════════════════
+   ÉCHECS — Feuille de style principale
+   Contenu : variables de thèmes, reset, composants
+   ═══════════════════════════════════════════════════ */
+
+
+/* ───────────────────────────────────────────────────
+   1. THÈMES — Variables CSS par thème
+   ─────────────────────────────────────────────────── */
+
+/* Thème Moderne (défaut) */
+[data-theme="moderne"] {
+  --couleur-fond:            #f4f8fc;
+  --couleur-fond-carte:      #ffffff;
+  --couleur-fond-nav:        #ffffff;
+  --couleur-fond-hero:       #e8f1fb;
+  --couleur-fond-panneau:    #ffffff;
+
+  --couleur-texte-principal: #0c2340;
+  --couleur-texte-secondaire:#4a6080;
+  --couleur-texte-discret:   #8aa0b8;
+
+  --couleur-accent:          #185fa5;
+  --couleur-accent-hover:    #0c447c;
+  --couleur-accent-clair:    #e6f1fb;
+
+  --couleur-bordure:         #dde8f4;
+  --couleur-bordure-forte:   #b5cfe8;
+
+  --couleur-case-claire:     #f0f4f8;
+  --couleur-case-sombre:     #b5cfe8;
+
+  --couleur-bouton-texte:    #ffffff;
+  --couleur-secondaire-fond: #e6f1fb;
+  --couleur-secondaire-texte:#185fa5;
+
+  --ombre-carte: 0 2px 16px rgba(24, 95, 165, 0.08);
+  --ombre-nav:   0 1px 8px  rgba(24, 95, 165, 0.07);
+
+  --rayon-carte: 14px;
+  --rayon-bouton: 8px;
+
+  --police-titre: 'Georgia', serif;
+  --police-corps: system-ui, -apple-system, sans-serif;
+}
+
+/* Thème Chess.com */
+[data-theme="chesscom"] {
+  --couleur-fond:            #312e2b;
+  --couleur-fond-carte:      #3d3a37;
+  --couleur-fond-nav:        #272422;
+  --couleur-fond-hero:       #272422;
+  --couleur-fond-panneau:    #3d3a37;
+
+  --couleur-texte-principal: #eeeed2;
+  --couleur-texte-secondaire:#c8b89a;
+  --couleur-texte-discret:   #7a6e5f;
+
+  --couleur-accent:          #769656;
+  --couleur-accent-hover:    #8aad68;
+  --couleur-accent-clair:    #3d3a37;
+
+  --couleur-bordure:         #4a4540;
+  --couleur-bordure-forte:   #b58863;
+
+  --couleur-case-claire:     #eeeed2;
+  --couleur-case-sombre:     #769656;
+
+  --couleur-bouton-texte:    #ffffff;
+  --couleur-secondaire-fond: #3d3a37;
+  --couleur-secondaire-texte:#eeeed2;
+
+  --ombre-carte: 0 2px 16px rgba(0, 0, 0, 0.5);
+  --ombre-nav:   0 1px 8px  rgba(0, 0, 0, 0.4);
+
+  --rayon-carte: 10px;
+  --rayon-bouton: 6px;
+
+  --police-titre: 'Georgia', serif;
+  --police-corps: system-ui, -apple-system, sans-serif;
+}
+
+/* Thème Médiéval */
+[data-theme="medieval"] {
+  --couleur-fond:            #1e1108;
+  --couleur-fond-carte:      #2a1a0c;
+  --couleur-fond-nav:        #1a0e06;
+  --couleur-fond-hero:       #2d1a0e;
+  --couleur-fond-panneau:    #2a1a0c;
+
+  --couleur-texte-principal: #f0deb0;
+  --couleur-texte-secondaire:#c8a06a;
+  --couleur-texte-discret:   #7a5530;
+
+  --couleur-accent:          #8b4513;
+  --couleur-accent-hover:    #a0521a;
+  --couleur-accent-clair:    #3d2510;
+
+  --couleur-bordure:         #4a2c14;
+  --couleur-bordure-forte:   #7a4a22;
+
+  --couleur-case-claire:     #c8a06a;
+  --couleur-case-sombre:     #3d2010;
+
+  --couleur-bouton-texte:    #f5deb3;
+  --couleur-secondaire-fond: #3d2510;
+  --couleur-secondaire-texte:#e8c88a;
+
+  --ombre-carte: 0 2px 20px rgba(0, 0, 0, 0.6);
+  --ombre-nav:   0 1px 10px rgba(0, 0, 0, 0.5);
+
+  --rayon-carte: 6px;
+  --rayon-bouton: 2px;
+
+  --police-titre: 'Palatino Linotype', 'Book Antiqua', 'Georgia', serif;
+  --police-corps: 'Palatino Linotype', 'Book Antiqua', serif;
+}
+
+
+/* ───────────────────────────────────────────────────
+   2. RESET & BASE
+   ─────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--couleur-fond);
+  color: var(--couleur-texte-principal);
+  font-family: var(--police-corps);
+  font-size: 16px;
+  line-height: 1.7;
+  transition: background-color 0.35s ease, color 0.35s ease;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+
+/* ───────────────────────────────────────────────────
+   3. NAVIGATION
+   ─────────────────────────────────────────────────── */
+
+.entete {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--couleur-fond-nav);
+  border-bottom: 1px solid var(--couleur-bordure);
+  box-shadow: var(--ombre-nav);
+  transition: background-color 0.35s ease, border-color 0.35s ease;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 64px;
+}
+
+.navigation__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--police-titre);
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--couleur-accent);
+  transition: color 0.3s;
+}
+
+.navigation__logo:hover {
+  color: var(--couleur-accent-hover);
+}
+
+.navigation__logo-icone {
+  font-size: 1.6rem;
+}
+
+.navigation__liens {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navigation__lien {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--couleur-texte-secondaire);
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.navigation__lien:hover,
+.navigation__lien--actif {
+  color: var(--couleur-accent);
+  border-bottom-color: var(--couleur-accent);
+}
+
+.navigation__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Bouton de changement de thème */
+.bouton-theme {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  background-color: var(--couleur-accent-clair);
+  border: 1px solid var(--couleur-bordure);
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.bouton-theme:hover {
+  background-color: var(--couleur-bordure);
+  transform: rotate(20deg);
+}
+
+/* Bouton menu hamburger (mobile uniquement) */
+.bouton-menu {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 18px;
+  padding: 0;
+}
+
+.bouton-menu__barre {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--couleur-texte-principal);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Animation hamburger → croix */
+.bouton-menu--ouvert .bouton-menu__barre:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.bouton-menu--ouvert .bouton-menu__barre:nth-child(2) {
+  opacity: 0;
+}
+.bouton-menu--ouvert .bouton-menu__barre:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Menu mobile déroulant */
+.menu-mobile {
+  display: none;
+  background-color: var(--couleur-fond-nav);
+  border-top: 1px solid var(--couleur-bordure);
+  padding: 1rem 1.5rem;
+  transition: background-color 0.35s ease;
+}
+
+.menu-mobile--visible {
+  display: block;
+}
+
+.menu-mobile__liens {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.menu-mobile__lien {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--couleur-texte-secondaire);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--couleur-bordure);
+  transition: color 0.2s;
+}
+
+.menu-mobile__lien:hover,
+.menu-mobile__lien--actif {
+  color: var(--couleur-accent);
+}
+
+
+/* ───────────────────────────────────────────────────
+   4. PANNEAU DE SÉLECTION DES THÈMES
+   ─────────────────────────────────────────────────── */
+
+.panneau-themes {
+  position: fixed;
+  top: 74px;
+  right: 1.5rem;
+  z-index: 200;
+  background-color: var(--couleur-fond-panneau);
+  border: 1px solid var(--couleur-bordure-forte);
+  border-radius: var(--rayon-carte);
+  padding: 1.25rem;
+  box-shadow: var(--ombre-carte);
+  width: 280px;
+  transition: background-color 0.35s ease;
+
+  /* Caché par défaut */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    background-color 0.35s ease;
+}
+
+.panneau-themes--visible {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.panneau-themes__fond {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: transparent;
+}
+
+.panneau-themes__fond--visible {
+  display: block;
+}
+
+.panneau-themes__titre {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--couleur-texte-discret);
+  margin-bottom: 1rem;
+}
+
+.panneau-themes__choix {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.carte-theme {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--couleur-bordure);
+  background: transparent;
+  color: var(--couleur-texte-principal);
+  font-family: inherit;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s;
+  width: 100%;
+}
+
+.carte-theme:hover {
+  border-color: var(--couleur-accent);
+  background-color: var(--couleur-accent-clair);
+}
+
+.carte-theme--active {
+  border-color: var(--couleur-accent);
+  background-color: var(--couleur-accent-clair);
+}
+
+.carte-theme__apercu {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.carte-theme__apercu--chesscom {
+  background: #312e2b;
+  color: #769656;
+}
+
+.carte-theme__apercu--moderne {
+  background: #e6f1fb;
+  color: #185fa5;
+}
+
+.carte-theme__apercu--medieval {
+  background: #2d1a0e;
+  color: #c8a06a;
+}
+
+.carte-theme__nom {
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: block;
+  line-height: 1.2;
+}
+
+.carte-theme__description {
+  font-size: 0.8rem;
+  color: var(--couleur-texte-discret);
+  display: block;
+}
+
+
+/* ───────────────────────────────────────────────────
+   5. HERO
+   ─────────────────────────────────────────────────── */
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 4rem;
+}
+
+.hero__contenu {
+  flex: 1;
+  max-width: 540px;
+}
+
+.hero__surtitre {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--couleur-accent);
+  margin-bottom: 1rem;
+}
+
+.hero__titre {
+  font-family: var(--police-titre);
+  font-size: 2.8rem;
+  font-weight: bold;
+  line-height: 1.2;
+  color: var(--couleur-texte-principal);
+  margin-bottom: 1.25rem;
+}
+
+.hero__description {
+  font-size: 1.05rem;
+  color: var(--couleur-texte-secondaire);
+  margin-bottom: 2rem;
+  line-height: 1.8;
+}
+
+.hero__boutons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ───────────────────────────────────────────────────
+   6. BOUTONS
+   ─────────────────────────────────────────────────── */
+
+.bouton {
+  display: inline-block;
+  padding: 0.75rem 1.6rem;
+  border-radius: var(--rayon-bouton);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  transition: background-color 0.2s, color 0.2s, transform 0.15s;
+}
+
+.bouton:hover {
+  transform: translateY(-2px);
+}
+
+.bouton--principal {
+  background-color: var(--couleur-accent);
+  color: var(--couleur-bouton-texte);
+}
+
+.bouton--principal:hover {
+  background-color: var(--couleur-accent-hover);
+}
+
+.bouton--secondaire {
+  background-color: var(--couleur-secondaire-fond);
+  color: var(--couleur-secondaire-texte);
+  border: 1px solid var(--couleur-bordure-forte);
+}
+
+.bouton--secondaire:hover {
+  background-color: var(--couleur-accent-clair);
+}
+
+
+/* ───────────────────────────────────────────────────
+   7. ÉCHIQUIER DÉCORATIF (hero)
+   ─────────────────────────────────────────────────── */
+
+.hero__visuel {
+  flex-shrink: 0;
+}
+
+.echiquier-deco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.echiquier-deco__pieces {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.piece-deco {
+  font-size: 2rem;
+  color: var(--couleur-accent);
+  transition: color 0.35s, transform 0.2s;
+  cursor: default;
+}
+
+.piece-deco:hover {
+  transform: translateY(-4px) scale(1.2);
+}
+
+.echiquier-deco__grille {
+  display: grid;
+  grid-template-columns: repeat(4, 52px);
+  grid-template-rows: repeat(4, 52px);
+  border: 2px solid var(--couleur-bordure-forte);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.case {
+  display: block;
+  transition: background-color 0.35s;
+}
+
+.case--claire {
+  background-color: var(--couleur-case-claire);
+}
+
+.case--sombre {
+  background-color: var(--couleur-case-sombre);
+}
+
+
+/* ───────────────────────────────────────────────────
+   8. SECTION RUBRIQUES
+   ─────────────────────────────────────────────────── */
+
+.rubriques {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.rubriques__titre {
+  font-family: var(--police-titre);
+  font-size: 1.6rem;
+  color: var(--couleur-texte-principal);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.rubriques__grille {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.carte-rubrique {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.75rem;
+  background-color: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon-carte);
+  box-shadow: var(--ombre-carte);
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.2s ease;
+  color: var(--couleur-texte-principal);
+}
+
+.carte-rubrique:hover {
+  transform: translateY(-4px);
+  border-color: var(--couleur-accent);
+}
+
+.carte-rubrique__icone {
+  font-size: 2rem;
+}
+
+.carte-rubrique__titre {
+  font-family: var(--police-titre);
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: var(--couleur-texte-principal);
+}
+
+.carte-rubrique__texte {
+  font-size: 0.9rem;
+  color: var(--couleur-texte-secondaire);
+  line-height: 1.65;
+  flex: 1;
+}
+
+.carte-rubrique__lien {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--couleur-accent);
+  margin-top: 0.25rem;
+  transition: color 0.2s;
+}
+
+.carte-rubrique:hover .carte-rubrique__lien {
+  color: var(--couleur-accent-hover);
+}
+
+
+/* ───────────────────────────────────────────────────
+   9. SECTION CITATION
+   ─────────────────────────────────────────────────── */
+
+.citation {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  border-top: 1px solid var(--couleur-bordure);
+  border-bottom: 1px solid var(--couleur-bordure);
+  margin: 2rem 0;
+  transition: border-color 0.35s;
+}
+
+.citation__texte {
+  font-family: var(--police-titre);
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--couleur-texte-principal);
+  max-width: 600px;
+  margin: 0 auto 0.75rem;
+  line-height: 1.6;
+}
+
+.citation__auteur {
+  font-size: 0.9rem;
+  color: var(--couleur-texte-discret);
+  letter-spacing: 0.05em;
+}
+
+
+/* ───────────────────────────────────────────────────
+   11. EN-TÊTE DE PAGE GÉNÉRIQUE (pages intérieures)
+   ─────────────────────────────────────────────────── */
+
+.entete-page {
+  padding: 3rem 0 2rem;
+  border-bottom: 1px solid var(--couleur-bordure);
+  margin-bottom: 2rem;
+}
+
+.entete-page__surtitre {
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--couleur-accent);
+  margin-bottom: 0.5rem;
+}
+
+.entete-page__titre {
+  font-family: var(--police-titre);
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: var(--couleur-texte-principal);
+  margin-bottom: 0.75rem;
+}
+
+.entete-page__description {
+  font-size: 1rem;
+  color: var(--couleur-texte-secondaire);
+  max-width: 600px;
+  line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+  .entete-page__titre {
+    font-size: 1.7rem;
+  }
+}
+
+
+/* ───────────────────────────────────────────────────
+   13. BOUTON DE CONTRÔLE GÉNÉRIQUE
+   (utilisé sur la page Pièces et la page Entraînement)
+   ─────────────────────────────────────────────────── */
+
+.bouton-controle {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+  font-family: var(--police-corps);
+  font-weight: 500;
+  background-color: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure-forte);
+  border-radius: var(--rayon-bouton);
+  color: var(--couleur-texte-secondaire);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.bouton-controle:hover {
+  background-color: var(--couleur-accent-clair);
+  border-color: var(--couleur-accent);
+  color: var(--couleur-accent);
+}
+
+.bouton-controle--actif {
+  background-color: var(--couleur-accent-clair);
+  border-color: var(--couleur-accent);
+  color: var(--couleur-accent);
+}
+
+
+/* ───────────────────────────────────────────────────
+   14. PIED DE PAGE
+   ─────────────────────────────────────────────────── */
+
+.pied-de-page {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  color: var(--couleur-texte-discret);
+  font-size: 0.88rem;
+  border-top: 1px solid var(--couleur-bordure);
+  transition: border-color 0.35s, color 0.35s;
+}

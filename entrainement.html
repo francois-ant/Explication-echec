@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="chesscom">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S'entraîner — Échecs</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/entrainement.css" />
+</head>
+
+<body data-page-active="entrainement">
+
+  <!-- Navigation et pied de page injectés par composants.js -->
+  <div id="zone-navigation"></div>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║         CONTENU PRINCIPAL            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <main class="page-entrainement">
+
+    <!-- En-tête de la page -->
+    <section class="entete-page">
+      <p class="entete-page__surtitre">Mettre en pratique</p>
+      <h1 class="entete-page__titre">S'entraîner</h1>
+      <p class="entete-page__description">
+        Jouez une partie complète. Cliquez sur une pièce pour voir ses
+        coups possibles surlignés, puis sur une case pour la déplacer.
+      </p>
+    </section>
+
+    <!-- Sélecteur de mode de jeu -->
+    <section class="selecteur-mode">
+      <button class="bouton-mode bouton-mode--actif" data-mode="local">
+        <span class="bouton-mode__icone">👥</span>
+        <span class="bouton-mode__texte">
+          <span class="bouton-mode__titre">2 joueurs (local)</span>
+          <span class="bouton-mode__description">Jouez à deux sur le même écran</span>
+        </span>
+      </button>
+      <button class="bouton-mode bouton-mode--desactive" disabled title="Bientôt disponible">
+        <span class="bouton-mode__icone">🤖</span>
+        <span class="bouton-mode__texte">
+          <span class="bouton-mode__titre">Contre l'IA</span>
+          <span class="bouton-mode__description">Bientôt disponible</span>
+        </span>
+      </button>
+    </section>
+
+    <!-- Zone principale : plateau + panneau latéral -->
+    <section class="zone-jeu">
+
+      <!-- Colonne plateau -->
+      <div class="colonne-plateau">
+
+        <div class="indicateur-tour" id="indicateurTour">
+          <!-- Mis à jour par plateau-entrainement.js -->
+        </div>
+
+        <div class="cadre-plateau">
+          <div class="coordonnees coordonnees--lignes" id="coordonneesLignes"></div>
+          <div class="plateau-conteneur">
+            <div class="plateau-jeu" id="plateauJeu">
+              <!-- Les 64 cases sont générées par plateau-entrainement.js -->
+            </div>
+
+            <!-- Boîte de choix de promotion (masquée par défaut) -->
+            <div class="boite-promotion" id="boitePromotion"></div>
+
+            <!-- Bandeau de fin de partie (masqué par défaut) -->
+            <div class="bandeau-fin-partie" id="bandeauFinPartie"></div>
+          </div>
+          <div class="coordonnees coordonnees--colonnes" id="coordonneesColonnes"></div>
+        </div>
+
+        <div class="controles-partie">
+          <button class="bouton-controle" onclick="nouvellePartie()">
+            ↺ Nouvelle partie
+          </button>
+          <button class="bouton-controle" onclick="retournerPlateau()">
+            ⇅ Retourner le plateau
+          </button>
+        </div>
+      </div>
+
+      <!-- Colonne historique -->
+      <div class="colonne-historique">
+        <h2 class="historique__titre">Historique des coups</h2>
+        <div class="liste-historique" id="listeHistorique">
+          <!-- Généré par plateau-entrainement.js -->
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <div id="zone-pied-de-page"></div>
+
+  <!-- Scripts du projet (ordre important) -->
+  <script src="js/themes.js"></script>
+  <script src="js/composants.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/moteur-echecs.js"></script>
+  <script src="js/plateau-entrainement.js"></script>
+
+</body>
+</html>
