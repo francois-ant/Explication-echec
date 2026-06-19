@@ -242,7 +242,7 @@
   content: '';
   position: absolute;
   inset: 4px;
-  border: 3.5px solid var(--couleur-accent);
+  border: 3.5px solid #474747;
   border-radius: 6px;
   opacity: 0.7;
   pointer-events: none;
