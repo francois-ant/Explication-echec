@@ -716,7 +716,7 @@ function jouerCoup(partie, ligneDepart, colonneDepart, coup, typePromotion) {
   } else if (enEchecMaintenant) {
     coupJoue.echec = true;
   }
-
+ 
   partie.historique.push(coupJoue);
 
   return coupJoue;
