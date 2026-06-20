@@ -159,7 +159,8 @@ const REGLES_FIN_PARTIE = [
     titre: 'Les autres parties nulles',
     resume: 'Répétition, 50 coups, matériel insuffisant, accord mutuel.',
     texte: `Plusieurs autres situations mènent à une partie nulle :
-      la <strong>triple répétition</strong> de la même position, la
+      la <strong>triple répétition</strong> de la même position (trois 
+      fois pendant la partie, toutes les pièces ont la même place), la
       <strong>règle des 50 coups</strong> (aucune capture ni mouvement de
       pion depuis 50 coups), un <strong>matériel insuffisant</strong>
       pour mater (ex : Roi seul contre Roi seul), ou un

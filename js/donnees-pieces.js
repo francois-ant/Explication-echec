@@ -64,13 +64,13 @@ const DONNEES_PIECES = {
       ne pouvait se déplacer que d'une case en diagonale.
       C'est au 15e siècle qu'elle a acquis ses pouvoirs actuels.`,
     diagramme: [
-      [0, 0, 2, 2, 2, 0, 0],
+      [2, 0, 2, 2, 2, 0, 2],
       [0, 2, 0, 2, 0, 2, 0],
       [2, 0, 2, 2, 2, 0, 2],
       [2, 2, 2, 1, 2, 2, 2],
       [2, 0, 2, 2, 2, 0, 2],
       [0, 2, 0, 2, 0, 2, 0],
-      [0, 0, 2, 2, 2, 0, 0],
+      [2, 0, 2, 2, 2, 0, 2],
     ],
     forme3D: 'reine',
     couleur3D: 0xf0d9b5,
@@ -138,8 +138,8 @@ const DONNEES_PIECES = {
     valeur:   '3 points',
     couleurValeur: '#27ae60',
     description: `Le Cavalier est la pièce la plus originale du jeu.
-      Il est le seul à pouvoir <strong>sauter par-dessus</strong>
-      les autres pièces. Sa mobilité unique en fait un redoutable
+      Il est le seul à pouvoir <strong>sauter par-dessus</strong> les 
+      autres pièces. Sa mobilité unique en fait un redoutable
       attaquant dans les positions fermées.`,
     mouvement: `Le Cavalier se déplace en <strong>"L"</strong> : deux cases
       dans une direction, puis une case perpendiculairement (ou inversement).
@@ -183,7 +183,7 @@ const DONNEES_PIECES = {
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 3, 2, 3, 0, 0],
       [0, 0, 0, 1, 0, 0, 0],
-      [0, 0, 0, 2, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
     ],
