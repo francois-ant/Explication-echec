@@ -264,7 +264,7 @@
 
 .grille-diagramme {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   gap: 3px;
   max-width: 220px;
   margin-bottom: 0.6rem;
