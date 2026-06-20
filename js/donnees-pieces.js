@@ -64,13 +64,13 @@ const DONNEES_PIECES = {
       ne pouvait se déplacer que d'une case en diagonale.
       C'est au 15e siècle qu'elle a acquis ses pouvoirs actuels.`,
     diagramme: [
-      [2, 0, 2, 2, 2, 0, 2],
+      [2, 0, 0, 2, 0, 0, 2],
       [0, 2, 0, 2, 0, 2, 0],
-      [2, 0, 2, 2, 2, 0, 2],
+      [0, 0, 2, 2, 2, 0, 0],
       [2, 2, 2, 1, 2, 2, 2],
-      [2, 0, 2, 2, 2, 0, 2],
+      [0, 0, 2, 2, 2, 0, 0],
       [0, 2, 0, 2, 0, 2, 0],
-      [2, 0, 2, 2, 2, 0, 2],
+      [2, 0, 0, 2, 0, 0, 2],
     ],
     forme3D: 'reine',
     couleur3D: 0xf0d9b5,
