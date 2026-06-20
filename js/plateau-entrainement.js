@@ -315,20 +315,30 @@ function rafraichirIndicateurTour() {
 }
 
 /**
- * Affiche le bandeau de fin de partie (mat ou pat).
+ * Affiche le bandeau de fin de partie (mat, pat, ou les différentes nulles).
  */
 function afficherBandeauFinPartie() {
   const bandeau = document.getElementById('bandeauFinPartie');
   if (!bandeau) return;
+
+  const dernierCoup = partieActuelle.historique[partieActuelle.historique.length - 1];
 
   let texte = '';
   if (partieActuelle.statut === 'mat') {
     const nomVainqueur = partieActuelle.vainqueur === COULEUR_BLANC ? 'Blancs' : 'Noirs';
     texte = `🏆 Échec et mat ! Les ${nomVainqueur} gagnent.`;
   } else if (partieActuelle.statut === 'pat') {
-  texte = `🤝 Pat — Partie nulle.`;
+    texte = `🤝 Pat — Partie nulle.`;
   } else if (partieActuelle.statut === 'nulle') {
-    texte = `➗ Règle des 50 coups — Partie nulle.`;
+    if (dernierCoup?.nulleRepetition) {
+      texte = `🔁 Triple répétition — Partie nulle.`;
+    } else if (dernierCoup?.nulleMaterielInsuffisant) {
+      texte = `♟️ Matériel insuffisant — Partie nulle.`;
+    } else if (dernierCoup?.nulleCinquanteCoups) {
+      texte = `➗ Règle des 50 coups — Partie nulle.`;
+    } else {
+      texte = `➗ Partie nulle.`;
+    }
   }
 
   bandeau.textContent = texte;

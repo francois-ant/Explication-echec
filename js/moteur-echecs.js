@@ -51,7 +51,7 @@ function creerNouvellePartie() {
     plateau[7][colonne] = { type: ordreRangee[colonne], couleur: COULEUR_NOIR,  aBouge: false };
   }
 
-  return {
+  const partie = {
     plateau,
     tourActuel: COULEUR_BLANC,
     cibleEnPassant: null,      /* {ligne, colonne} de la case capturable en passant, ou null */
@@ -60,7 +60,60 @@ function creerNouvellePartie() {
     statut: 'en-cours',        /* 'en-cours' | 'mat' | 'pat' | 'nulle' */
     vainqueur: null,           /* COULEUR_BLANC | COULEUR_NOIR | null */
     compteurCinquanteCoups: 0, /* demi-coups depuis la dernière capture ou le dernier mouvement de pion */
+    positionsVues: {},         /* clé de position -> nombre de fois rencontrée (triple répétition) */
   };
+
+  /* Enregistrer la position de départ comme première occurrence */
+  enregistrerPositionActuelle(partie);
+
+  return partie;
+}
+
+/**
+ * Construit une clé textuelle représentant une position complète : placement
+ * des pièces, joueur au trait, droits de roque restants et cible en passant.
+ * Deux positions strictement identiques produisent la même clé.
+ * @param {Object} partie
+ * @returns {string}
+ */
+function construireClePosition(partie) {
+  let cle = '';
+  for (let l = 0; l < 8; l++) {
+    for (let c = 0; c < 8; c++) {
+      const piece = partie.plateau[l][c];
+      cle += piece ? `${piece.type[0]}${piece.couleur[0]}` : '--';
+    }
+  }
+  cle += `_${partie.tourActuel}`;
+
+  /* Droits de roque restants (influence les coups légaux, donc fait partie de la position) */
+  const roiBlanc  = partie.plateau[0][4];
+  const roiNoir   = partie.plateau[7][4];
+  const tourA1    = partie.plateau[0][0];
+  const tourH1    = partie.plateau[0][7];
+  const tourA8    = partie.plateau[7][0];
+  const tourH8    = partie.plateau[7][7];
+  cle += `_${roiBlanc && !roiBlanc.aBouge ? 1 : 0}`;
+  cle += `${tourA1 && !tourA1.aBouge ? 1 : 0}${tourH1 && !tourH1.aBouge ? 1 : 0}`;
+  cle += `${roiNoir && !roiNoir.aBouge ? 1 : 0}`;
+  cle += `${tourA8 && !tourA8.aBouge ? 1 : 0}${tourH8 && !tourH8.aBouge ? 1 : 0}`;
+
+  /* Cible en passant (une prise en passant possible change les coups légaux) */
+  cle += partie.cibleEnPassant ? `_${partie.cibleEnPassant.ligne}-${partie.cibleEnPassant.colonne}` : '_none';
+
+  return cle;
+}
+
+/**
+ * Enregistre la position actuelle dans le compteur de positions vues,
+ * et retourne le nombre total d'occurrences de cette position (y compris celle-ci).
+ * @param {Object} partie
+ * @returns {number}
+ */
+function enregistrerPositionActuelle(partie) {
+  const cle = construireClePosition(partie);
+  partie.positionsVues[cle] = (partie.positionsVues[cle] || 0) + 1;
+  return partie.positionsVues[cle];
 }
 
 /**
@@ -438,6 +491,62 @@ function genererTousCoupsLegaux(partie, couleur) {
  * @param {Object} partie
  * @returns {Object}
  */
+/* ───────────────────────────────────────────────────
+   Détection du matériel insuffisant pour mater
+   ─────────────────────────────────────────────────── */
+
+/**
+ * Vérifie si le matériel restant sur le plateau est insuffisant pour
+ * qu'un échec et mat soit théoriquement possible. Couvre les cas classiques :
+ *   - Roi seul contre Roi seul
+ *   - Roi + Fou contre Roi seul
+ *   - Roi + Cavalier contre Roi seul
+ *   - Roi + Fou contre Roi + Fou, avec les deux Fous sur la même couleur de case
+ * @param {Object} partie
+ * @returns {boolean}
+ */
+function materielEstInsuffisant(partie) {
+  const piecesRestantes = [];
+
+  for (let l = 0; l < 8; l++) {
+    for (let c = 0; c < 8; c++) {
+      const piece = partie.plateau[l][c];
+      if (piece && piece.type !== TYPE_ROI) {
+        piecesRestantes.push({ ...piece, ligne: l, colonne: c });
+      }
+    }
+  }
+
+  /* Présence d'un Pion, d'une Tour ou d'une Reine : du mat reste toujours possible */
+  const aDuMaterielLourd = piecesRestantes.some(p =>
+    p.type === TYPE_PION || p.type === TYPE_TOUR || p.type === TYPE_REINE
+  );
+  if (aDuMaterielLourd) return false;
+
+  /* Roi seul contre Roi seul */
+  if (piecesRestantes.length === 0) return true;
+
+  /* Roi + une seule pièce mineure (Fou ou Cavalier) contre Roi seul */
+  if (piecesRestantes.length === 1) {
+    return piecesRestantes[0].type === TYPE_FOU || piecesRestantes[0].type === TYPE_CAVALIER;
+  }
+
+  /* Roi + Fou contre Roi + Fou, les deux Fous sur la même couleur de case */
+  if (piecesRestantes.length === 2 && piecesRestantes.every(p => p.type === TYPE_FOU)) {
+    const couleurCase = (p) => (p.ligne + p.colonne) % 2;
+    return couleurCase(piecesRestantes[0]) === couleurCase(piecesRestantes[1]);
+  }
+
+  return false;
+}
+
+
+
+/**
+ * Crée une copie profonde de l'état de la partie.
+ * @param {Object} partie
+ * @returns {Object}
+ */
 function clonerPartie(partie) {
   return {
     plateau: partie.plateau.map(rangee => rangee.map(piece => piece ? { ...piece } : null)),
@@ -448,6 +557,7 @@ function clonerPartie(partie) {
     statut: partie.statut,
     vainqueur: partie.vainqueur,
     compteurCinquanteCoups: partie.compteurCinquanteCoups,
+    positionsVues: { ...partie.positionsVues },
   };
 }
 
@@ -551,6 +661,15 @@ function jouerCoup(partie, ligneDepart, colonneDepart, coup, typePromotion) {
     partie.compteurCinquanteCoups += 1;
   }
 
+  /* Triple répétition : un coup de pion ou une capture est irréversible,
+     donc aucune position antérieure à ce coup ne pourra plus jamais se
+     reproduire. On vide l'historique des positions à ce moment-là.
+     C'est un compteur indépendant de compteurCinquanteCoups : il se trouve
+     juste partager le même déclencheur, mais les deux ne sont pas liés. */
+  if (etaitUnPion || yAEuCapture) {
+    partie.positionsVues = {};
+  }
+
   /* Construction de l'entrée d'historique */
   const coupJoue = {
     piece: piece.type,
@@ -572,6 +691,9 @@ function jouerCoup(partie, ligneDepart, colonneDepart, coup, typePromotion) {
   const enEchecMaintenant = partie.roiEnEchec[partie.tourActuel === COULEUR_BLANC ? 'blanc' : 'noir'];
   const coupsRestants = genererTousCoupsLegaux(partie, partie.tourActuel);
 
+  /* Enregistrer la nouvelle position pour la détection de triple répétition */
+  const nbOccurrencesPosition = enregistrerPositionActuelle(partie);
+
   if (coupsRestants.length === 0) {
     if (enEchecMaintenant) {
       partie.statut = 'mat';
@@ -585,6 +707,12 @@ function jouerCoup(partie, ligneDepart, colonneDepart, coup, typePromotion) {
     /* 100 demi-coups = 50 coups complets (un coup complet = un coup blanc + un coup noir) */
     partie.statut = 'nulle';
     coupJoue.nulleCinquanteCoups = true;
+  } else if (nbOccurrencesPosition >= 3) {
+    partie.statut = 'nulle';
+    coupJoue.nulleRepetition = true;
+  } else if (materielEstInsuffisant(partie)) {
+    partie.statut = 'nulle';
+    coupJoue.nulleMaterielInsuffisant = true;
   } else if (enEchecMaintenant) {
     coupJoue.echec = true;
   }
