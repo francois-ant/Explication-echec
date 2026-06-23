@@ -159,8 +159,7 @@ const REGLES_FIN_PARTIE = [
     titre: 'Les autres parties nulles',
     resume: 'Répétition, 50 coups, matériel insuffisant, accord mutuel.',
     texte: `Plusieurs autres situations mènent à une partie nulle :
-      la <strong>triple répétition</strong> de la même position (trois 
-      fois pendant la partie, toutes les pièces ont la même place), la
+      la <strong>triple répétition</strong> de la même position, la
       <strong>règle des 50 coups</strong> (aucune capture ni mouvement de
       pion depuis 50 coups), un <strong>matériel insuffisant</strong>
       pour mater (ex : Roi seul contre Roi seul), ou un
@@ -180,13 +179,175 @@ const REGLES_FIN_PARTIE = [
 
 
 /* ───────────────────────────────────────────────────
+   Catégorie 4 : Principes d'ouverture
+   ─────────────────────────────────────────────────── */
+
+const REGLES_OUVERTURE = [
+  {
+    id: 'controle-centre',
+    icone: '🎯',
+    titre: 'Contrôler le centre',
+    resume: 'Occuper ou surveiller les cases centrales dès les premiers coups.',
+    texte: `Les quatre cases centrales (d4, d5, e4, e5) sont les plus
+      importantes de l'échiquier : une pièce qui s'y trouve contrôle un
+      maximum de cases et peut rapidement se déployer vers n'importe
+      quelle zone du plateau. <strong>Avancer un pion central</strong>
+      (e4, d4, e5 ou d5) dès le premier coup est la façon la plus directe
+      de revendiquer cet espace.<br><br>
+      Un joueur qui néglige le centre laisse l'adversaire y installer ses
+      pièces, ce qui limite fortement sa propre mobilité pour le reste
+      de la partie.`,
+    demo: 'controle-centre',
+  },
+  {
+    id: 'developpement',
+    icone: '🚀',
+    titre: 'Développer ses pièces',
+    resume: 'Sortir Cavaliers et Fous rapidement, avant la Dame.',
+    texte: `« Développer » signifie sortir ses pièces mineures (Cavaliers
+      et Fous) de leur case de départ pour qu'elles deviennent actives.
+      L'ordre conseillé est <strong>Cavaliers et Fous avant la Dame</strong> :
+      sortir la Dame trop tôt l'expose à des attaques de pièces mineures
+      adverses, qui gagnent du temps en la chassant.<br><br>
+      Une bonne règle de base : éviter de bouger deux fois la même pièce
+      pendant l'ouverture si un coup de développement différent est possible.`,
+    demo: 'developpement',
+  },
+  {
+    id: 'securite-roi',
+    icone: '🛡️',
+    titre: 'Sécuriser son Roi',
+    resume: 'Roquer tôt pour mettre le Roi à l\'abri.',
+    texte: `Le Roi commence la partie au centre de l'échiquier, exactement
+      là où il est le plus exposé une fois les lignes ouvertes. Le
+      <strong>roque</strong> (voir la catégorie "Mouvements Spéciaux")
+      permet de le mettre rapidement en sécurité sur le côté, tout en
+      activant une Tour au passage.<br><br>
+      Un Roi resté au centre trop longtemps risque de subir une attaque
+      directe avant même d'avoir pu se réfugier — c'est l'une des causes
+      les plus fréquentes de défaite rapide chez les débutants.`,
+    demo: 'securite-roi',
+  },
+];
+
+
+/* ───────────────────────────────────────────────────
+   Catégorie 5 : Notions avancées (tactique)
+   ─────────────────────────────────────────────────── */
+
+const REGLES_AVANCEES = [
+  {
+    id: 'clouage-absolu',
+    icone: '📌',
+    titre: 'Le Clouage Absolu',
+    resume: 'Une pièce ne peut pas bouger sans exposer son propre Roi.',
+    texte: `Une pièce est "clouée" lorsqu'elle se trouve entre une pièce
+      adverse à longue portée (Tour, Fou ou Dame) et son propre Roi, sur
+      la même ligne, colonne ou diagonale. Le clouage est dit
+      <strong>absolu</strong> quand la pièce clouée protège directement
+      le Roi : la déplacer serait un coup <strong>illégal</strong>, car
+      cela exposerait le Roi à l'échec.<br><br>
+      Une pièce absolument clouée est donc totalement immobilisée tant
+      que la situation perdure.`,
+    demo: 'clouage-absolu',
+  },
+  {
+    id: 'clouage-relatif',
+    icone: '📍',
+    titre: 'Le Clouage Relatif',
+    resume: 'Bouger la pièce clouée est légal, mais coûteux.',
+    texte: `Le clouage est dit <strong>relatif</strong> quand la pièce
+      clouée protège une pièce de valeur (souvent la Dame) plutôt que le
+      Roi directement. Dans ce cas, déplacer la pièce clouée est
+      <strong>parfaitement légal</strong>, mais expose la pièce plus
+      précieuse derrière elle à la capture.<br><br>
+      C'est une menace psychologique autant que matérielle : l'adversaire
+      doit choisir entre garder sa pièce clouée immobile ou risquer de
+      perdre une pièce de plus grande valeur.`,
+    demo: 'clouage-relatif',
+  },
+  {
+    id: 'fourchette',
+    icone: '🍴',
+    titre: 'La Fourchette',
+    resume: 'Une seule pièce attaque deux cibles à la fois.',
+    texte: `Une fourchette se produit quand une pièce attaque
+      <strong>simultanément deux pièces adverses</strong> (ou plus). La
+      victime ne peut sauver qu'une seule de ses pièces à la fois, ce qui
+      garantit un gain de matériel pour l'attaquant.<br><br>
+      Le <strong>Cavalier</strong> est particulièrement redoutable pour
+      les fourchettes, car ses déplacements en "L" lui permettent
+      d'attaquer des pièces qui semblent éloignées et non connectées
+      entre elles.`,
+    demo: 'fourchette',
+  },
+  {
+    id: 'enfilade',
+    icone: '🎳',
+    titre: 'L\'Enfilade',
+    resume: 'Deux pièces alignées, la plus précieuse devant.',
+    texte: `L'enfilade ressemble au clouage, mais à l'envers :
+      <strong>la pièce la plus précieuse est attaquée en premier</strong>,
+      avec une pièce de moindre valeur alignée juste derrière elle.
+      Quand la pièce de valeur doit se déplacer pour échapper à l'attaque,
+      elle dévoile la pièce derrière elle, qui se retrouve alors capturée
+      à son tour.<br><br>
+      C'est une tactique fréquente avec les Tours et les Dames sur des
+      lignes ou colonnes ouvertes.`,
+    demo: 'enfilade',
+  },
+  {
+    id: 'attaque-decouverte',
+    icone: '💥',
+    titre: 'L\'Attaque à la Découverte',
+    resume: 'Déplacer une pièce révèle l\'attaque d\'une autre.',
+    texte: `Une attaque à la découverte se produit lorsqu'une pièce se
+      déplace et <strong>révèle une ligne d'attaque</strong> d'une
+      seconde pièce restée derrière elle (Tour, Fou ou Dame). La pièce
+      qui bouge peut elle-même créer une menace supplémentaire au passage,
+      ce qui rend cette tactique particulièrement puissante.<br><br>
+      Quand la pièce qui se déplace donne elle-même échec en plus de
+      révéler l'attaque de l'autre pièce, on parle d'<strong>échec
+      double</strong> — l'une des situations les plus difficiles à parer.`,
+    demo: 'attaque-decouverte',
+  },
+  {
+    id: 'attaque-double',
+    icone: '⚡',
+    titre: 'L\'Attaque Double',
+    resume: 'Un seul coup crée deux menaces différentes à parer.',
+    texte: `L'attaque double regroupe toute situation où un seul coup crée
+      <strong>deux menaces distinctes</strong> que l'adversaire ne peut
+      pas parer toutes les deux en un seul coup — qu'il s'agisse d'une
+      fourchette, d'un échec accompagné d'une autre menace, ou de deux
+      pièces attaquées par des pièces différentes en même temps.<br><br>
+      Le point commun de toutes les tactiques de cette catégorie est le
+      même : forcer l'adversaire à un choix impossible.`,
+    demo: 'attaque-double',
+  },
+];
+
+
+/* ───────────────────────────────────────────────────
    Regroupement par catégorie pour la navigation par onglets
    ─────────────────────────────────────────────────── */
 
 const CATEGORIES_REGLES = {
-  bases:      { titre: 'Les Bases',          icone: '📖', regles: REGLES_BASES },
-  special:    { titre: 'Mouvements Spéciaux', icone: '✨', regles: REGLES_SPECIALES },
-  finPartie:  { titre: 'Fin de Partie',       icone: '🏁', regles: REGLES_FIN_PARTIE },
+  bases:      { titre: 'Les Bases',           icone: '📖', regles: REGLES_BASES },
+  special:    { titre: 'Mouvements Spéciaux',  icone: '✨', regles: REGLES_SPECIALES },
+  finPartie:  { titre: 'Fin de Partie',        icone: '🏁', regles: REGLES_FIN_PARTIE },
+  ouverture:  {
+    titre: 'Principes d\'Ouverture',
+    icone: '🌅',
+    regles: REGLES_OUVERTURE,
+    avertissement: `Ces trois principes sont des <strong>repères généraux</strong>
+      pour bien débuter une partie, pas des règles absolues. Aux échecs,
+      presque chaque principe a ses exceptions légitimes selon la
+      position. Ne les suivez pas aveuglément : ils sont là pour vous
+      guider quand vous ne savez pas quoi jouer, pas pour remplacer
+      votre réflexion sur l'échiquier.`,
+  },
+  avance:     { titre: 'Notions Avancées',     icone: '🧠', regles: REGLES_AVANCEES },
 };
 
-const ORDRE_CATEGORIES = ['bases', 'special', 'finPartie'];
+const ORDRE_CATEGORIES = ['bases', 'special', 'finPartie', 'ouverture', 'avance'];

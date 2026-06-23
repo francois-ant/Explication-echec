@@ -72,7 +72,20 @@ function genererContenuCategorie() {
   if (!conteneur) return;
 
   const categorie = CATEGORIES_REGLES[categorieActive];
-  let html = '<div class="accordeon-regles">';
+  let html = '';
+
+  /* Bandeau d'avertissement, uniquement si la catégorie en définit un
+     (ex: les principes d'ouverture ne sont pas des règles absolues) */
+  if (categorie.avertissement) {
+    html += `
+      <div class="avertissement-categorie">
+        <span class="avertissement-categorie__icone">⚠️</span>
+        <p class="avertissement-categorie__texte">${categorie.avertissement}</p>
+      </div>
+    `;
+  }
+
+  html += '<div class="accordeon-regles">';
 
   categorie.regles.forEach((regle, index) => {
     const aUneDemo = Boolean(regle.demo);
